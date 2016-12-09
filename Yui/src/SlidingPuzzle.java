@@ -1,7 +1,7 @@
 /* Hillary Li
  * APCS BTHS
  * Last modified: 12/9/16
- * Percentage done: 50%
+ * Percentage done: 45%
  */
 public class SlidingPuzzle
 {
