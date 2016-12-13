@@ -11,6 +11,7 @@ private static int rows, columns;
 public static Scanner scan = new Scanner(System.in);
 private static char [][] board = new char [3][3];
 private static char turn = 'O';
+
 public static void main (String[] args)
 {
 	for(int i=0; i<3; i++)
@@ -20,8 +21,10 @@ public static void main (String[] args)
 			board[i][j] = '_'; //char only one mark
   		}
 	}
+	System.out.println("Type in a row first then column : ");
 	PrintBoard();
-	
+	Start();
+	WinStrat(rows,columns);
 }
 
 private static void PrintBoard()
@@ -40,7 +43,7 @@ private static void PrintBoard()
 
 private static void Start()
 {
-	boolean playing = true 
+	boolean playing = true; 
 		while(playing)
 		{
 			
@@ -50,20 +53,22 @@ private static void Start()
 			if (WinStrat(rows,columns))
 			{
 				playing = false;
-				System.out.println("Game over, Payer" + turn + "wins !");
+				System.out.println("Game over, Player " + turn + " wins !");
 			}
 			PrintBoard(); //start over
 			if (turn =='O')   //switch once game starts
-				turn == 'X';
+				turn = 'X';
 			else 
-				turn =='O';
+			{
+				turn = 'O';
+			}
 		}
 	
 }
 
-private static boolean WinStrat(int rMove, cMove)
+private static boolean WinStrat(int rMove,int  cMove)
 {
-	//check horizontal & verticla row 
+	//check horizontal & vertical row 
 	if (board[0][cMove] == board [1][cMove] && board[0][cMove]== board [2][cMove])
 		return true;
 	if (board [rMove][0] == board[rMove][1] && board [rMove][0] == board[rMove][2])
@@ -71,15 +76,13 @@ private static boolean WinStrat(int rMove, cMove)
 	
 	//check diagonal 
 	
-	if (board[0][0]==board[1][1] && board [0][0]== board [2][2])
+	if (board[0][0]==board[1][1] && board [0][0]== board [2][2] && board[1][1] != '_')
 		return true;
-	if (board[0][2] == board [1][1] && board [0][2] == board[2][0])
+	if (board[0][2] == board [1][1] && board [0][2] == board[2][0] && board[1][1] != '_')
 		return true;
 	return false;
+	
 }
-x x x
-x x x
-x x x
 
 
 
