@@ -37,7 +37,7 @@ public class SlidingPuzzle
 		this.lengthOfPuzzle = lengthOfPuzzle;
 		puzzleSolution = createSolution(lengthOfPuzzle);
 		puzzleShuffled = puzzleSolution;
-		shufflePuzzle(shufflePattern());
+		//shufflePuzzle(shufflePattern());
 	}
 	public void changeDifficulty(String difficulty)
 	{
