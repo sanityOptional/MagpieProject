@@ -10,9 +10,38 @@ public class SlidingPuzzle
 	private  int[] puzzleShuffled = puzzleSolution;
 	private  String difficulty = "easy";
 	private int lengthOfPuzzle = 3 ;
+	private int numOfMoves = 0;
+	private boolean gameStart = false;
+	/*
+	 * SlidingPuzzle (String difficulty)
+	 * Accepts a String of "easy," "medium," or "hard"
+	 * to initialize the SlidingPuzzle
+	 * If unacceptable input, tells user automatic level is "easy"
+	 */
 	SlidingPuzzle(String difficulty)
 	{
 		changeDifficulty(difficulty);
+	}
+	/*
+	 * initializePuzzle(int lengthOfPuzzle)
+	 * abstraction for changeDifficulty
+	 * creates a puzzleSolution and a puzzle
+	 */
+	private void initializePuzzle(int lengthOfPuzzle)
+	{
+		this.lengthOfPuzzle = lengthOfPuzzle;
+		puzzleSolution = createSolution(lengthOfPuzzle);
+		puzzleShuffled = puzzleSolution;
+		//shufflePuzzle(shufflePattern());
+		gameStart = true;
+	}
+	/*
+	 * changeDifficulty(String difficulty)
+	 * changes the difficulty of the puzzle and restarts puzzle as well.
+	 */
+	public void changeDifficulty(String difficulty)
+	{
+		this.difficulty = difficulty;
 		if (difficulty.equals("easy"))
 		{
 			initializePuzzle(3);
@@ -29,19 +58,8 @@ public class SlidingPuzzle
 		{
 			changeDifficulty("easy");
 			initializePuzzle(3);
-			System.out.print("Not a difficulty level, please type easy, medium, or hard: ");
+			System.out.print("Not a difficulty level, automatic difficulty set to easy");
 		}
-	}
-	private void initializePuzzle(int lengthOfPuzzle)
-	{
-		this.lengthOfPuzzle = lengthOfPuzzle;
-		puzzleSolution = createSolution(lengthOfPuzzle);
-		puzzleShuffled = puzzleSolution;
-		//shufflePuzzle(shufflePattern());
-	}
-	public void changeDifficulty(String difficulty)
-	{
-		this.difficulty = difficulty;
 	}
 	//private String shufflePattern()
 	//{
@@ -63,15 +81,45 @@ public class SlidingPuzzle
 		}
 		else
 		{
-			puzzleMove(pattern.charAt(0));
+			puzzleMove(pattern);
 			return shufflePuzzle(pattern.substring(1));
 		}
 	}
-	public void puzzleMove(char move)
+	public void puzzleMove(String move)
 	{
+		String movement = move.substring(0,1);
+		if(gameStart)
+		{
+			numOfMoves++;
+		}
+		if(movement.equals("U"))
+		{
+			
+		}
+		else if(movement.equals("D"))
+		{
+			
+		}
+		else if(movement.equals("L"))
+		{
+			
+		}
+		else if(movement.equals("R"))
+		{
+			
+		}
 	}
 	public Boolean done()
 	{
 		return puzzleShuffled.equals(puzzleSolution);
+	}
+	private int zeroPos()
+	{
+		String currentPuzzle = "";
+		for(int x : puzzleShuffled)
+		{
+			currentPuzzle = currentPuzzle + x;
+		}
+		return currentPuzzle.indexOf(0);
 	}
 }
