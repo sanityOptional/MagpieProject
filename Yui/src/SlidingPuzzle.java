@@ -1,7 +1,7 @@
 /* Hillary Li
  * APCS BTHS
- * Last modified: 12/13/16
- * Percentage done: 51%
+ * Last modified: 12/19/16
+ * Percentage done: 65%
  */
 import java.util.*;
 public class SlidingPuzzle
@@ -61,9 +61,17 @@ public class SlidingPuzzle
 			System.out.print("Not a difficulty level, automatic difficulty set to easy");
 		}
 	}
+	/*
+	 * shufflePattern
+	 * Creates a pattern to shuffle the puzzle
+	 */
 	//private String shufflePattern()
 	//{
 	//}
+	/*
+	 * createSolution(int length)
+	 * Creates the solution puzzle
+	 */
 	private int[] createSolution(int length)
 	{
 		int[] newSolution = new int[(length^2)-1];
@@ -73,6 +81,10 @@ public class SlidingPuzzle
 		}
 		return newSolution;
 	}
+	/*
+	 * shufflePuzzle(String pattern)
+	 * shuffles a puzzle based on the given pattern
+	 */
 	private String shufflePuzzle(String pattern)
 	{
 		if(pattern.length() == 0)
@@ -85,6 +97,10 @@ public class SlidingPuzzle
 			return shufflePuzzle(pattern.substring(1));
 		}
 	}
+	/*
+	 * puzzleMove(String move)
+	 * Accepts a String move to move the position of the zero
+	 */
 	public void puzzleMove(String move)
 	{
 		String movement = move.substring(0,1);
@@ -109,10 +125,18 @@ public class SlidingPuzzle
 			
 		}
 	}
+	/*
+	 * done
+	 * Checks if the puzzle is completed
+	 */
 	public Boolean done()
 	{
 		return puzzleShuffled.equals(puzzleSolution);
 	}
+	/*
+	 * zeroPos
+	 * Searches for the position/index of the zero
+	 */
 	private int zeroPos()
 	{
 		String currentPuzzle = "";
