@@ -1,3 +1,4 @@
+
 import java.util.Scanner;
 /* Sin Yee Cheung
  * APCS BTHS
@@ -6,84 +7,210 @@ import java.util.Scanner;
  */
 
 public class TicTacToe {
-	
-private static int rows, columns;
-public static Scanner scan = new Scanner(System.in);
-private static char [][] board = new char [3][3];
-private static char turn = 'O';
 
-public static void main (String[] args)
-{
-	for(int i=0; i<3; i++)
+
+	public class tic
 	{
-		for (int j=0; j<3; j++)
-		{
-			board[i][j] = '_'; //char only one mark
-  		}
+	  public static Scanner sc = new Scanner(System.in);
+
+	  public static void main(String[] args)
+	  {
+
+	    final int SIZE = 3;
+	    char[][] board = new char[SIZE][SIZE]; // game board
+
+	    Board(board); // initialize the board 
+
+	    System.out.println("Welcome to tic tac toe, try to beat me! :)" );
+	    System.out.println("You are PLAYER 'X'!");
+	    showBoard(board);
+	    char userSymbol= 'X';
+	    char compSymbol ='O';
+	    
+	    int turn;  // 0 - the user, 1 - the computer
+	    int remainCount = SIZE * SIZE; 
+
+	    // user will be X first
+	    if (userSymbol == 'X') {
+	      turn = 0;
+	      userPlay(board, userSymbol); // user puts his/her first tic
+	    }
+	    else {
+	      turn = 1;
+	      compPlay(board, compSymbol); // computer puts its first tic
+	    }
+	    // Show the board, and decrement the count of remaining cells.
+	   
+	    remainCount--;
+
+	    // Play the game until either one wins.
+	    boolean done = false;
+	    int winner = -1;   // 0 -- the user, 1 -- the computer, -1 -- draw
+
+	    while (!done && remainCount > 0) {
+	      // If there is a winner at this time, set the winner and the done flag to true.
+	      done = isGameWon(board, turn, userSymbol, compSymbol); // Did the turn won?
+
+	      if (done)
+	        winner = turn; // the one who made the last move won the game
+	      else {
+	        // No winner yet.  Find the next turn and play.
+	        turn = (turn + 1 ) % 2;
+
+	        if (turn == 0)
+	          userPlay(board, userSymbol);
+	        else
+	          compPlay(board, compSymbol);
+
+	        // Show the board after one tic, and decrement the rem count.
+	        showBoard(board);
+	        remainCount--;
+	      }
+	    }
+
+	    // Winner is found.  Declare the winner.
+	    if (winner == 0)
+	      System.out.println("\n** YOU WON. CONGRATULATIONS!! **");
+	    else if (winner == 1)
+	      System.out.println("\n** YOU LOST, better luck next time :) **");
+	    else
+	      System.out.println("\n** IT'S A DRAW! **");
+	  }
+	  
+	  
+	  private static void Board(char[][] board) 
+	  {
+	    for (int i = 0; i < board.length; i++)
+	      for (int j = 0; j < board[0].length; j++)
+	        board[i][j] = ' ';
+	    
+	    // board : 3 rows & columns 
+	  }
+
+	  private static void showBoard(char[][] brd)
+	  {
+	    int numRow = brd.length;
+	    int numCol = brd[0].length;
+
+	    System.out.println();
+
+	    // column header
+	    System.out.print("    ");
+	    for (int i = 0; i < numCol; i++)
+	      System.out.print(i + "   ");
+	    System.out.print('\n');
+
+	    System.out.println(); 
+	    
+	    // table
+	    for (int i = 0; i < numRow; i++) {
+	      System.out.print(i + "  ");
+	      for (int j = 0; j < numCol; j++) {
+	        if (j != 0)
+	          System.out.print("|");
+	        System.out.print(" " + brd[i][j] + " ");
+	      }
+
+	      System.out.println();
+	      
+	      
+
+	      if (i != (numRow - 1)) {
+	    
+	    	  
+	        System.out.print("   ");
+	        for (int j = 0; j < numCol; j++) {
+	          if (j != 0)
+	            System.out.print("");
+	          System.out.print("----");
+	        }
+	        System.out.println();
+	      }
+	    }
+	    System.out.println();
+	  }
+
+	  private static void userPlay(char[][] board, char uTurn)
+	  {
+	    System.out.print("\nEnter a row and column: ");
+	    int rowIndex = sc.nextInt(); // scan row
+	    int colIndex = sc.nextInt(); // scan column 
+
+	    while (board[rowIndex][colIndex] != ' ') 
+	    { 
+	      System.out.print("\n!! The space is taken.!! \n PLEASE TRY AGAIN: "); // next line
+	      rowIndex = sc.nextInt();
+	      colIndex = sc.nextInt();
+	    }
+
+	    board[rowIndex][colIndex] = uTurn;
+	  }
+
+	  private static void compPlay(char[][] board, char cTurn)
+	  {
+	    
+	    for (int i = 0; i < board.length; i++) {
+	      for (int j = 0; j < board[0].length; j++) {
+	        if (board[i][j] == ' ') { 
+	          board[i][j] = cTurn;
+	          return;
+	        }
+	      }
+	    }
+	  }
+
+	  private static boolean isGameWon(char[][] board, int turn, char uTurn, char cTurn)
+	  {	  
+		 
+	    char sym;
+	    if (turn == 0)
+	      sym = uTurn;
+	    else
+	      sym = cTurn;
+
+	    int i, j;
+	    boolean win = false;
+
+	    // Check win by a row
+	    for (i = 0; i < board.length && !win; i++) {
+	      for (j = 0; j < board[0].length; j++) {
+	        if (board[i][j] != sym)
+	          break;
+	      }
+	      if (j == board[0].length)
+	        win = true;
+	    }
+
+	    // Check win by a column
+	    for (j = 0; j < board[0].length && !win; j++) {
+	      for (i = 0; i < board.length; i++) {
+	        if (board[i][j] != sym)
+	          break;
+	      }
+	      if (i == board.length)
+	        win = true;
+	    }
+
+	    // Check diagonal 
+	    if (!win) {
+	      for (i = 0; i < board.length; i++) {
+	        if (board[i][i] != sym)
+	          break;
+	      }
+	      if (i == board.length)
+	        win = true;
+	    }
+
+	    // Check  diagonal 
+	    if (!win) {
+	      for (i = 0; i < board.length; i++) {
+	        if (board[i][board.length - 1 - i] != sym)
+	          break;
+	      }
+	      if (i == board.length)
+	        win = true;
+	    }
+
+	    return win;
+	  }
 	}
-	System.out.println("Type in a row first then column : ");
-	PrintBoard();
-	Start();
-	WinStrat(rows,columns);
-}
-
-private static void PrintBoard()
-{
-	for (int i=0; i<3; i++){
-		System.out.println();
-		for(int j=0; j<3; j++)
-		{
-			if (j==0)
-				System.out.print(" ");
-			System.out.print(board[i][j]+ " ");
-		}
-	}
-	System.out.println();
-}
-
-private static void Start()
-{
-	boolean playing = true; 
-		while(playing)
-		{
-			
-			rows= scan.nextInt() - 1; // starts from 1, 2, 3
-			columns = scan.nextInt() -1; 
-			board[rows][columns]= turn;
-			if (WinStrat(rows,columns))
-			{
-				playing = false;
-				System.out.println("Game over, Player " + turn + " wins !");
-			}
-			PrintBoard(); //start over
-			if (turn =='O')   //switch once game starts
-				turn = 'X';
-			else 
-			{
-				turn = 'O';
-			}
-		}
-	
-}
-
-private static boolean WinStrat(int rMove,int  cMove)
-{
-	//check horizontal & vertical row 
-	if (board[0][cMove] == board [1][cMove] && board[0][cMove]== board [2][cMove])
-		return true;
-	if (board [rMove][0] == board[rMove][1] && board [rMove][0] == board[rMove][2])
-		return true;
-	
-	//check diagonal 
-	
-	if (board[0][0]==board[1][1] && board [0][0]== board [2][2] && board[1][1] != '_')
-		return true;
-	if (board[0][2] == board [1][1] && board [0][2] == board[2][0] && board[1][1] != '_')
-		return true;
-	return false;
-	
-}
-
-
-
-}
