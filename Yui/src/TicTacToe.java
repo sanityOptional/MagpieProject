@@ -45,7 +45,7 @@ public class TicTacToe
 	    int winner = -1;    //-1 -- draw
 
 	    while (!done && remainCount > 0) {
-	      // If there is a winner at this time, set the winner and the done flag to true.
+	      
 	      done = isGameWon(board, turn, userSymbol, compSymbol); // Did the turn won?
 
 	      if (done)
