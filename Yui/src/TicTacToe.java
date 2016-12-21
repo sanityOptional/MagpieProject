@@ -6,8 +6,6 @@ import java.util.Scanner;
  * Percentage done: 
  */
 
-import java.util.Scanner;
-
 public class TicTacToe
 {
 
@@ -21,7 +19,7 @@ public class TicTacToe
 
 	    Board(board); // initialize the board 
 
-	    System.out.println("Welcome to tic tac toe, try to beat me! :)" );
+	    System.out.println("Welcome to tic tac toe, try to beat me! :)~" );
 	    System.out.println("You are PLAYER 'X'!");
 	    showBoard(board);
 	    char userSymbol= 'X';
@@ -39,13 +37,12 @@ public class TicTacToe
 	      turn = 1;
 	      compPlay(board, compSymbol); // computer puts its first tic
 	    }
-	    // Show the board, and decrement the count of remaining cells.
-	   
+	 
 	    remainCount--;
 
 	    // Play the game until either one wins.
 	    boolean done = false;
-	    int winner = -1;   // 0 -- the user, 1 -- the computer, -1 -- draw
+	    int winner = -1;    //-1 -- draw
 
 	    while (!done && remainCount > 0) {
 	      // If there is a winner at this time, set the winner and the done flag to true.
@@ -62,7 +59,6 @@ public class TicTacToe
 	        else
 	          compPlay(board, compSymbol);
 
-	        // Show the board after one tic, and decrement the rem count.
 	        showBoard(board);
 	        remainCount--;
 	      }
@@ -72,7 +68,7 @@ public class TicTacToe
 	    if (winner == 0)
 	      System.out.println("\n** YOU WON. CONGRATULATIONS!! **");
 	    else if (winner == 1)
-	      System.out.println("\n** YOU LOST, better luck next time :) **");
+	      System.out.println("\n** YOU LOST, better luck next time :P **");
 	    else
 	      System.out.println("\n** IT'S A DRAW! **");
 	  }
@@ -148,7 +144,7 @@ public class TicTacToe
 
 	  private static void compPlay(char[][] board, char cTurn)
 	  {
-	    
+	    //
 	    for (int i = 0; i < board.length; i++) {
 	      for (int j = 0; j < board[0].length; j++) {
 	        if (board[i][j] == ' ') { 
