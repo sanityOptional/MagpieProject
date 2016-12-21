@@ -1,9 +1,9 @@
 /* Hillary Li
  * APCS BTHS
- * Last modified: 12/19/16
- * Percentage done: 65%
+ * Last modified: 12/20/16
+ * Percentage done: 95%
  */
-import java.util.*;
+import java.util.Random;
 public class SlidingPuzzle
 {
 	private int[] puzzleSolution = {0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -12,6 +12,8 @@ public class SlidingPuzzle
 	private int lengthOfPuzzle = 3 ;
 	private int numOfMoves = 0;
 	private boolean gameStart = false;
+	private boolean ff = false;
+	private Random rdm = new Random();
 	/*
 	 * SlidingPuzzle (String difficulty)
 	 * Accepts a String of "easy," "medium," or "hard"
@@ -32,7 +34,7 @@ public class SlidingPuzzle
 		this.lengthOfPuzzle = lengthOfPuzzle;
 		puzzleSolution = createSolution(lengthOfPuzzle);
 		puzzleShuffled = puzzleSolution;
-		//shufflePuzzle(shufflePattern());
+		shufflePuzzle();
 		gameStart = true;
 	}
 	/*
@@ -62,12 +64,55 @@ public class SlidingPuzzle
 		}
 	}
 	/*
-	 * shufflePattern
-	 * Creates a pattern to shuffle the puzzle
+	 * shufflePuzzle
+	 * shuffles the puzzle
 	 */
-	//private String shufflePattern()
-	//{
-	//}
+	private void shufflePuzzle()
+	{
+		int numOfShuffles = rdm.nextInt(15) + 15;
+		int choice = rdm.nextInt(3);
+		String possibleMove = "";
+		if (choice == 0)
+		{
+			possibleMove = "U";
+		}
+		else if (choice == 1)
+		{
+			possibleMove = "D";
+		}
+		else if (choice == 2)
+		{
+			possibleMove = "L";
+		}
+		else if (choice == 3)
+		{
+			possibleMove = "R";
+		}
+		for(int x = 0; x < numOfShuffles; x++)
+		{
+			while(!notIllegal(possibleMove))
+			{
+				choice = rdm.nextInt(3);
+				if (choice == 0)
+				{
+					possibleMove = "U";
+				}
+				else if (choice == 1)
+				{
+					possibleMove = "D";
+				}
+				else if (choice == 2)
+				{
+					possibleMove = "L";
+				}
+				else if (choice == 3)
+				{
+					possibleMove = "R";
+				}
+			}
+			puzzleMove(possibleMove);
+		}
+	}
 	/*
 	 * createSolution(int length)
 	 * Creates the solution puzzle
@@ -82,48 +127,57 @@ public class SlidingPuzzle
 		return newSolution;
 	}
 	/*
-	 * shufflePuzzle(String pattern)
-	 * shuffles a puzzle based on the given pattern
-	 */
-	private String shufflePuzzle(String pattern)
-	{
-		if(pattern.length() == 0)
-		{
-			return "";
-		}
-		else
-		{
-			puzzleMove(pattern);
-			return shufflePuzzle(pattern.substring(1));
-		}
-	}
-	/*
 	 * puzzleMove(String move)
 	 * Accepts a String move to move the position of the zero
 	 */
 	public void puzzleMove(String move)
 	{
 		String movement = move.substring(0,1);
-		if(gameStart)
+		int pos = zeroPos();
+		if(notIllegal(movement))
 		{
-			numOfMoves++;
+			if(gameStart)
+			{
+				numOfMoves++;
+			}
+			if(movement.equals("U"))
+			{
+				trueMove(pos, pos - lengthOfPuzzle);
+			}
+			else if(movement.equals("D"))
+			{
+				trueMove(pos, pos + lengthOfPuzzle);
+			}
+			else if(movement.equals("L"))
+			{
+				trueMove(pos, pos - 1);
+			}
+			else if(movement.equals("R"))
+			{
+				trueMove(pos, pos + 1);
+			}
 		}
-		if(movement.equals("U"))
+		else
 		{
-			
+			if(movement.equals("FF"))
+			{
+				ff = true;
+			}
+			else if(gameStart)
+			{
+				System.out.println("Illegal move. Please enter U, D, L, R, or FF.");
+			}
 		}
-		else if(movement.equals("D"))
-		{
-			
-		}
-		else if(movement.equals("L"))
-		{
-			
-		}
-		else if(movement.equals("R"))
-		{
-			
-		}
+	}
+	/*
+	 * trueMove(int x, int y)
+	 * only used with x being equal to the position of the zero and y being the new position
+	 */
+	private void trueMove(int x, int y)
+	{
+		int a = puzzleShuffled[x];
+		puzzleShuffled[x] = puzzleShuffled[y];
+		puzzleShuffled[y] = a;
 	}
 	/*
 	 * done
@@ -145,5 +199,37 @@ public class SlidingPuzzle
 			currentPuzzle = currentPuzzle + x;
 		}
 		return currentPuzzle.indexOf(0);
+	}
+	/*
+	 * notIllegal(String move)
+	 * checks if a move is not illegal
+	 */
+	private Boolean notIllegal(String move)
+	{
+		int pos = zeroPos();
+		boolean[] edges = {false, false, false, false};
+		for(int x = 0; x < 4; x++)
+		{
+			for(int y = 0; y < lengthOfPuzzle; y++)
+			{
+				if (x == 0)
+				{
+					edges[x] = edges[x] || (pos == y);
+				}
+				else if (x == 1)
+				{
+					edges[x] = edges[x] || (pos == (lengthOfPuzzle*(lengthOfPuzzle - 1) + y));
+				}
+				else if (x == 2)
+				{
+					edges[x] = edges[x] || (pos == (lengthOfPuzzle*y));
+				}
+				else if (x == 3)
+				{
+					edges[x] = edges[x] || (pos == (((y + 1) * lengthOfPuzzle) - 1));
+				}
+			}
+		}
+		return !((move.equals("U")) && (edges[0]) || (move.equals("D")) && (edges[1]) || (move.equals("L")) && (edges[2]) || (move.equals("R")) && (edges[3]));
 	}
 }
