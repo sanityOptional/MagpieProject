@@ -6,11 +6,11 @@ import java.util.Scanner;
  * Percentage done: 
  */
 
-public class TicTacToe {
+import java.util.Scanner;
 
+public class TicTacToe
+{
 
-	public class tic
-	{
 	  public static Scanner sc = new Scanner(System.in);
 
 	  public static void main(String[] args)
