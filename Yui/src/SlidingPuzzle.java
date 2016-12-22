@@ -1,7 +1,7 @@
 /* Hillary Li
  * APCS BTHS
- * Last modified: 12/20/16
- * Percentage done: 95%
+ * Last modified: 12/22/16
+ * Percentage done: 99.9% (Testing left to be completed)
  */
 import java.util.Random;
 public class SlidingPuzzle
@@ -236,5 +236,23 @@ public class SlidingPuzzle
 			}
 		}
 		return !((move.equals("U") && (edges[0])) || (move.equals("D") && (edges[1])) || (move.equals("L") && (edges[2])) || (move.equals("R") && (edges[3])));
+	}
+	/*
+	 * displayBoard()
+	 * displays the board
+	 */
+	public void displayBoard()
+	{
+		for (int x = 0; x < (lengthOfPuzzle^2) - 1; x++)
+		{
+			if((x % lengthOfPuzzle) == (lengthOfPuzzle - 1))
+			{
+				System.out.println(puzzleShuffled[x] + " ");
+			}
+			else
+			{
+				System.out.print(puzzleShuffled[x] + " ");
+			}
+		}
 	}
 }
