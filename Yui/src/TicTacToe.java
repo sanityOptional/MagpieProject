@@ -12,8 +12,14 @@ public class TicTacToe {
 		public static Scanner scan = new Scanner(System.in);
 		public static char[][]board;
 		
+	
+		private int [][] board;
+		private string playerIcon;
+		private boolean gameStart;
+		private boolean playerWin;
+		private boolean gameDone; 
 		
-		public static void main (String[] args)
+		5public static void main (String[] args)
 		{ 
 			board = new char [3][3];
 			for (int i = 0; i<3; i++)
@@ -59,6 +65,9 @@ public class TicTacToe {
 		}
 
 		
+		
+		
+		
 		public static boolean gameOver(int rMove, int cMove){
 			//Check perpendicular victory
 			if(board[0][cMove] == board[1][cMove]
@@ -78,4 +87,4 @@ public class TicTacToe {
 		
 	}
 
-}	}
+}	
