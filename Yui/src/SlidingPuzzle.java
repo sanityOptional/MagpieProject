@@ -36,6 +36,7 @@ public class SlidingPuzzle
 		puzzleShuffled = puzzleSolution;
 		shufflePuzzle();
 		gameStart = true;
+		ff = false;
 	}
 	/*
 	 * changeDifficulty(String difficulty)
@@ -187,6 +188,10 @@ public class SlidingPuzzle
 	{
 		return puzzleShuffled.equals(puzzleSolution);
 	}
+	public Boolean forfeit()
+	{
+		return ff;
+	}
 	/*
 	 * zeroPos
 	 * Searches for the position/index of the zero
@@ -230,6 +235,6 @@ public class SlidingPuzzle
 				}
 			}
 		}
-		return !((move.equals("U")) && (edges[0]) || (move.equals("D")) && (edges[1]) || (move.equals("L")) && (edges[2]) || (move.equals("R")) && (edges[3]));
+		return !((move.equals("U") && (edges[0])) || (move.equals("D") && (edges[1])) || (move.equals("L") && (edges[2])) || (move.equals("R") && (edges[3])));
 	}
 }
